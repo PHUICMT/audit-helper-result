@@ -5,6 +5,10 @@ import Typography from "@mui/material/Typography";
 import { CircleSpinnerOverlay } from "react-spinner-overlay";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
+import Alert from "@mui/material/Alert";
+import Collapse from "@mui/material/Collapse";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
   CSVReader,
   CSVIndexed,
@@ -43,9 +47,13 @@ const rejectStyle = {
 
 export default function CsvUploader() {
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const [data, setData] = useState([]);
+  const [fileNames, setFileNames] = useState(null);
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file) => {
+      setFileNames(file.name);
+      setOpen(true);
       CSVReader(file, (data_) => {
         setData(data_);
       });
@@ -91,6 +99,12 @@ export default function CsvUploader() {
     });
   };
 
+  const onRemoveCsv = () => {
+    setOpen(false);
+    setData([]);
+    setFileNames(null);
+  };
+
   return (
     <React.Fragment>
       <CircleSpinnerOverlay
@@ -117,10 +131,24 @@ export default function CsvUploader() {
         <input {...getInputProps()} />
         <p>ลากไฟล์ CSV มาวางที่นี่ หรือคลิกเพื่อเลือกไฟล์</p>
       </div>
+      <Collapse in={open}>
+        <Alert
+          action={
+            <IconButton color="error" onClick={onRemoveCsv} aria-label="delete" size="small">
+              <DeleteIcon fontSize="inherit" />
+            </IconButton>
+          }
+          sx={{ mb: 2 }}
+        >
+          อัปโหลดไฟล์ <b>{fileNames}</b> เรียบร้อยแล้ว
+        </Alert>
+      </Collapse>
       <Button
-        sx={{ marginTop: 2 }}
+        disabled={data.length === 0}
+        sx={{ marginTop: 2, fontWeight: "bold", fontSize: "1.2rem" }}
         onClick={onSubmit}
-        variant="outlined"
+        variant="contained"
+        color="success"
         endIcon={<SendIcon />}
       >
         เริ่มตรวจสอบ
