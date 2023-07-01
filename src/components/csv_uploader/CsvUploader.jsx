@@ -1,5 +1,7 @@
 import React, { useCallback, useState, useMemo } from "react";
 import { useDropzone } from "react-dropzone";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
 import { CSVReader, CSVIndexed, JsonToCSV } from "../../services/CSVProvider";
 
 const baseStyle = {
@@ -65,12 +67,27 @@ export default function CsvUploader() {
   };
 
   return (
-    <div className="container">
+    <React.Fragment>
+      <Toolbar
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+          padding: 5,
+        }}
+      >
+        <Typography variant="h5" color="inherit" align="left" paddingBottom={2}>
+          Audit Choice 2 Check 3 by AI
+        </Typography>
+        <Typography variant="h7" color="inherit" align="left">
+          File ที่นำเข้าเพื่อให้ AI ช่วยตรวจสอบตวมถูกต้องของสาเหตุการตาย
+        </Typography>
+      </Toolbar>
       <div {...getRootProps({ style })}>
         <input {...getInputProps()} />
         <p>ลากไฟล์ CSV มาวางที่นี่ หรือคลิกเพื่อเลือกไฟล์</p>
       </div>
       <button onClick={onSubmit}>กดสิ รอไร</button>
-    </div>
+    </React.Fragment>
   );
 }

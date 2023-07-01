@@ -1,4 +1,5 @@
 import { read, utils } from "xlsx";
+import axios from "axios";
 
 export function CSVReader(handleFile, callback) {
 
@@ -59,4 +60,26 @@ export async function JsonToCSV(json_data, callback) {
     csv_data += "\n"
   }
   callback(csv_data_with_header + csv_data)
+}
+
+export async function CSVToApi(csv_data, callback) {
+  const apiUrl = "http://localhost:3000/upload";
+  const blob = new Blob([csv_data], { type: 'text/csv' });
+  const csv_file = new File([blob], 'data.csv', { type: 'text/csv' });
+
+  try {
+    const formData = new FormData();
+    formData.append('file', csv_file);
+    await axios.post(apiUrl, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(res => {
+      callback(res.data)
+    }).catch(_ => {
+      callback("Error")
+    })
+  } catch (error) {
+    callback("Error")
+  }
 }
