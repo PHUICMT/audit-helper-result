@@ -2,7 +2,12 @@ import React, { useCallback, useState, useMemo } from "react";
 import { useDropzone } from "react-dropzone";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { CSVReader, CSVIndexed, JsonToCSV } from "../../services/CSVProvider";
+import {
+  CSVReader,
+  CSVIndexed,
+  JsonToCSV,
+  CSVToApi,
+} from "../../services/CSVProvider";
 
 const baseStyle = {
   flex: 1,
@@ -59,9 +64,14 @@ export default function CsvUploader() {
   );
 
   const onSubmit = () => {
-    CSVIndexed(data, (data_) => {
-      JsonToCSV(data_, (data__) => {
-        console.log(data__);
+    CSVIndexed(data, (json_csv_indexed) => {
+      JsonToCSV(json_csv_indexed, (string_csv) => {
+        CSVToApi(string_csv, (response) => {
+          console.log(response);
+          if (response === "Error") {
+            alert("Error");
+          }
+        });
       });
     });
   };
