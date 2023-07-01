@@ -23,12 +23,13 @@ const baseStyle = {
   flexDirection: "column",
   alignItems: "center",
   padding: "20px",
+  paddingBlock: "100px",
   borderWidth: 2,
   borderRadius: 2,
   borderColor: "#eeeeee",
   borderStyle: "dashed",
-  backgroundColor: "#fafafa",
-  color: "#bdbdbd",
+  backgroundColor: "#E4FFFB",
+  color: "#11B599",
   outline: "none",
   transition: "border .24s ease-in-out",
 };
@@ -127,32 +128,40 @@ export default function CsvUploader() {
           File ที่นำเข้าเพื่อให้ AI ช่วยตรวจสอบความถูกต้องของสาเหตุการตาย
         </Typography>
       </Toolbar>
-      <div {...getRootProps({ style })}>
-        <input {...getInputProps()} />
-        <p>ลากไฟล์ CSV มาวางที่นี่ หรือคลิกเพื่อเลือกไฟล์</p>
-      </div>
-      <Collapse in={open}>
-        <Alert
-          action={
-            <IconButton color="error" onClick={onRemoveCsv} aria-label="delete" size="small">
-              <DeleteIcon fontSize="inherit" />
-            </IconButton>
-          }
-          sx={{ mb: 2 }}
+
+      <div style={{ paddingInline: 100 }}>
+        <div {...getRootProps({ style })}>
+          <input {...getInputProps()} />
+          <p>ลากไฟล์ CSV มาวางที่นี่ หรือคลิกเพื่อเลือกไฟล์</p>
+        </div>
+        <Collapse in={open}>
+          <Alert
+            action={
+              <IconButton
+                color="error"
+                onClick={onRemoveCsv}
+                aria-label="delete"
+                size="small"
+              >
+                <DeleteIcon fontSize="inherit" />
+              </IconButton>
+            }
+            sx={{ mb: 2 }}
+          >
+            อัปโหลดไฟล์ <b>{fileNames}</b> เรียบร้อยแล้ว
+          </Alert>
+        </Collapse>
+        <Button
+          disabled={data.length === 0}
+          sx={{ marginTop: 2, fontWeight: "bold", fontSize: "1.2rem" }}
+          onClick={onSubmit}
+          variant="contained"
+          color="success"
+          endIcon={<SendIcon />}
         >
-          อัปโหลดไฟล์ <b>{fileNames}</b> เรียบร้อยแล้ว
-        </Alert>
-      </Collapse>
-      <Button
-        disabled={data.length === 0}
-        sx={{ marginTop: 2, fontWeight: "bold", fontSize: "1.2rem" }}
-        onClick={onSubmit}
-        variant="contained"
-        color="success"
-        endIcon={<SendIcon />}
-      >
-        เริ่มตรวจสอบ
-      </Button>
+          เริ่มตรวจสอบ
+        </Button>
+      </div>
     </React.Fragment>
   );
 }
