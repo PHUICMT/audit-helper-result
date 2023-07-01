@@ -2,12 +2,16 @@ import React, { useCallback, useState, useMemo } from "react";
 import { useDropzone } from "react-dropzone";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import { CircleSpinnerOverlay } from "react-spinner-overlay";
+import Button from "@mui/material/Button";
+import SendIcon from "@mui/icons-material/Send";
 import {
   CSVReader,
   CSVIndexed,
   JsonToCSV,
   CSVToApi,
 } from "../../services/CSVProvider";
+import ErrorDialogPopup from "../dialog_popup/ErrorDialogPopup";
 
 const baseStyle = {
   flex: 1,
@@ -38,6 +42,7 @@ const rejectStyle = {
 };
 
 export default function CsvUploader() {
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file) => {
@@ -64,13 +69,23 @@ export default function CsvUploader() {
   );
 
   const onSubmit = () => {
+    setLoading(true);
     CSVIndexed(data, (json_csv_indexed) => {
+      if (json_csv_indexed === "Error") {
+        ErrorDialogPopup();
+        return null;
+      }
       JsonToCSV(json_csv_indexed, (string_csv) => {
+        if (string_csv === "Error") {
+          ErrorDialogPopup();
+          return null;
+        }
         CSVToApi(string_csv, (response) => {
-          console.log(response);
           if (response === "Error") {
-            alert("Error");
+            ErrorDialogPopup();
           }
+          setLoading(false);
+          return null;
         });
       });
     });
@@ -78,6 +93,11 @@ export default function CsvUploader() {
 
   return (
     <React.Fragment>
+      <CircleSpinnerOverlay
+        size={200}
+        loading={loading}
+        overlayColor="rgba(0,153,255,0.2)"
+      />
       <Toolbar
         sx={{
           display: "flex",
@@ -90,14 +110,21 @@ export default function CsvUploader() {
           Audit Choice 2 Check 3 by AI
         </Typography>
         <Typography variant="h7" color="inherit" align="left">
-          File ที่นำเข้าเพื่อให้ AI ช่วยตรวจสอบตวมถูกต้องของสาเหตุการตาย
+          File ที่นำเข้าเพื่อให้ AI ช่วยตรวจสอบความถูกต้องของสาเหตุการตาย
         </Typography>
       </Toolbar>
       <div {...getRootProps({ style })}>
         <input {...getInputProps()} />
         <p>ลากไฟล์ CSV มาวางที่นี่ หรือคลิกเพื่อเลือกไฟล์</p>
       </div>
-      <button onClick={onSubmit}>กดสิ รอไร</button>
+      <Button
+        sx={{ marginTop: 2 }}
+        onClick={onSubmit}
+        variant="outlined"
+        endIcon={<SendIcon />}
+      >
+        เริ่มตรวจสอบ
+      </Button>
     </React.Fragment>
   );
 }

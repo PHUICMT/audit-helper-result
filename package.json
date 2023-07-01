@@ -19,7 +19,9 @@
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-scripts": "5.0.1",
+    "react-spinner-overlay": "^0.1.33",
     "styled-components": "^6.0.1",
+    "sweetalert2": "^11.7.12",
     "web-vitals": "^2.1.4",
     "xlsx": "^0.18.5"
   },

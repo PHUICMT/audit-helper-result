@@ -2,7 +2,6 @@ import { read, utils } from "xlsx";
 import axios from "axios";
 
 export function CSVReader(handleFile, callback) {
-
   const reader = new FileReader();
   const rABS = !!reader.readAsBinaryString;
   reader.onabort = () => {
@@ -12,16 +11,19 @@ export function CSVReader(handleFile, callback) {
     callback("Error")
   }
   reader.onload = () => {
-    const binaryStr = reader.result;
-    const wb = read(binaryStr, {
-      type: rABS ? "binary" : "array",
-      bookVBA: true,
-    });
-    const wsname = wb.SheetNames[0];
-    const ws = wb.Sheets[wsname];
-    const data = utils.sheet_to_json(ws, { raw: false, defval: "" });
-
-    callback(data)
+    try {
+      const binaryStr = reader.result;
+      const wb = read(binaryStr, {
+        type: rABS ? "binary" : "array",
+        bookVBA: true,
+      });
+      const wsname = wb.SheetNames[0];
+      const ws = wb.Sheets[wsname];
+      const data = utils.sheet_to_json(ws, { raw: false, defval: "" });
+      callback(data)
+    } catch (_) {
+      callback("Error")
+    }
   };
 
   try {
@@ -38,9 +40,13 @@ export function CSVReader(handleFile, callback) {
 export async function CSVIndexed(json_data, callback) {
   let indexed_data = []
   let index = 0
-  for await (let i of json_data) {
-    indexed_data.push({ index: index, ...i })
-    index++
+  try {
+    for await (let i of json_data) {
+      indexed_data.push({ index: index, ...i })
+      index++
+    }
+  } catch (_) {
+    callback("Error")
   }
   callback(indexed_data)
 }
@@ -48,16 +54,20 @@ export async function CSVIndexed(json_data, callback) {
 export async function JsonToCSV(json_data, callback) {
   let csv_data_with_header = ""
   let csv_data = ""
-  let header = Object.keys(json_data[0])
-  for await (let i of header) {
-    csv_data_with_header += i + ","
-  }
-  csv_data_with_header += "\n"
-  for await (let i of json_data) {
-    for await (let j of header) {
-      csv_data += i[j] + ","
+  try {
+    let header = Object.keys(json_data[0])
+    for await (let i of header) {
+      csv_data_with_header += i + ","
     }
-    csv_data += "\n"
+    csv_data_with_header += "\n"
+    for await (let i of json_data) {
+      for await (let j of header) {
+        csv_data += i[j] + ","
+      }
+      csv_data += "\n"
+    }
+  } catch (_) {
+    callback("Error")
   }
   callback(csv_data_with_header + csv_data)
 }
