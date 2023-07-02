@@ -94,7 +94,7 @@ export default function InfoTable(props) {
                 <TableCell
                   component="th"
                   scope="row"
-                  sx={{ fontSize: 18, color: grey[800] }}
+                  sx={{ fontSize: 14, color: grey[800] }}
                 >
                   {row.label}
                 </TableCell>
@@ -113,7 +113,7 @@ export default function InfoTable(props) {
           marginTop: 2,
           marginBottom: 4,
           float: "left",
-          fontSize: 18,
+          fontSize: 14,
           fontWeight: "bold",
         }}
         variant="contained"
