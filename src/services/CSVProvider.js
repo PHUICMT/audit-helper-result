@@ -73,7 +73,7 @@ export async function JsonToCSV(json_data, callback) {
 }
 
 export async function CSVToApi(csv_data, callback) {
-  const apiUrl = "http://localhost:3000/upload";
+  const apiUrl = "http://localhost:5000/upload";
   const blob = new Blob([csv_data], { type: 'text/csv' });
   const csv_file = new File([blob], 'data.csv', { type: 'text/csv' });
 

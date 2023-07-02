@@ -80,7 +80,7 @@ export default function InfoTable(props) {
                 >
                   {row.label}
                 </TableCell>
-                <TableCell align="right">
+                <TableCell variant="body" align="right">
                   <BadgePoint point={row.point} color={row.color} />
                 </TableCell>
               </TableRow>

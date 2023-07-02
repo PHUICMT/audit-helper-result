@@ -1,12 +1,11 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
 import PageTabs from '../tabs/PageTabs';
 
-function PageHeader(props) {
-  const { title } = props;
+function PageHeader() {
+  const { title } = "Audit Helper Result";
 
   return (
     <React.Fragment>
@@ -24,9 +23,5 @@ function PageHeader(props) {
     </React.Fragment>
   );
 }
-
-PageHeader.propTypes = {
-  title: PropTypes.string.isRequired,
-};
 
 export default PageHeader;

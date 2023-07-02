@@ -1,12 +1,16 @@
-import './App.css';
-import PageHeader from './components/page_header/PageHeader'
-import CsvUploader from './components/csv_uploader/CsvUploader'
+import "./App.css";
+import { Route, Routes } from "react-router-dom";
+
+import PageHeader from "./components/page_header/PageHeader";
+import CsvUploader from "./components/csv_uploader/CsvUploader";
 
 function App() {
   return (
     <div className="App">
-        {/* <PageHeader title="Audit Helper Result" /> */}
-        <CsvUploader />
+      <Routes>
+        <Route path="/" element={<CsvUploader/>} />
+        <Route path="/page_header" element={<PageHeader/>} />
+      </Routes>
     </div>
   );
 }
