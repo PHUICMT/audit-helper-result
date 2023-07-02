@@ -7,15 +7,15 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
-function createData(id, a, b, c, d) {
-  return { id, a, b, c, d };
+function createData(index, a, b, c, d) {
+  return { index, a, b, c, d };
 }
 
-export default function BasicTable(props) {
+export default function DetailTable(props) {
   const csvJson = props.csvJson;
   const header = ["ID", "A", "B", "C", "D"];
   const rows = csvJson.map((row) =>
-    createData(row.id, row.a, row.b, row.c, row.d)
+    createData(row.index, row.a, row.b, row.c, row.d)
   );
   return (
     <TableContainer component={Paper}>
@@ -23,23 +23,23 @@ export default function BasicTable(props) {
         <TableHead>
           <TableRow>
             {header.map((head) => (
-              <TableCell>{head}</TableCell>
+              <TableCell key={head}>{head}</TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
             <TableRow
-              key={row.id}
+              key={row.index}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.id}
+                {row.index}
               </TableCell>
-              <TableCell align="right"> {row.a} </TableCell>
-              <TableCell align="right"> {row.b} </TableCell>
-              <TableCell align="right"> {row.c} </TableCell>
-              <TableCell align="right"> {row.d} </TableCell>
+              <TableCell align="left"> {row.a} </TableCell>
+              <TableCell align="left"> {row.b} </TableCell>
+              <TableCell align="left"> {row.c} </TableCell>
+              <TableCell align="left"> {row.d} </TableCell>
             </TableRow>
           ))}
         </TableBody>

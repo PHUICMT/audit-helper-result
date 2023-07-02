@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 
 import TabPanel from "../tab_panel/TabPanel";
 import InfoTable from "../tables/InfoTable";
+import DetailTable from "../tables/DetailTable";
 
 import { CSVStringToJson } from "../../services/CSVProvider";
 
@@ -128,25 +129,25 @@ export default function PageTabs(props) {
         {allpoint && <InfoTable allpoint={allpoint} csvJson={csvJson} />}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        {yData && <InfoTable allpoint={allpoint} csvJson={yData} />}
+        {yData && <DetailTable csvJson={yData} />}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        {n1Data && <InfoTable allpoint={allpoint} csvJson={n1Data} />}
+        {n1Data && <DetailTable csvJson={n1Data} />}
       </TabPanel>
       <TabPanel value={value} index={3}>
-        {n2Data && <InfoTable allpoint={allpoint} csvJson={n2Data} />}
+        {n2Data && <DetailTable csvJson={n2Data} />}
       </TabPanel>
       <TabPanel value={value} index={4}>
-        {n3Data && <InfoTable allpoint={allpoint} csvJson={n3Data} />}
+        {n3Data && <DetailTable csvJson={n3Data} />}
       </TabPanel>
       <TabPanel value={value} index={5}>
-        {n4Data && <InfoTable allpoint={allpoint} csvJson={n4Data} />}
+        {n4Data && <DetailTable csvJson={n4Data} />}
       </TabPanel>
       <TabPanel value={value} index={6}>
-        {n5Data && <InfoTable allpoint={allpoint} csvJson={n5Data} />}
+        {n5Data && <DetailTable csvJson={n5Data} />}
       </TabPanel>
       <TabPanel value={value} index={7}>
-        {n6Data && <InfoTable allpoint={allpoint} csvJson={n6Data} />}
+        {n6Data && <DetailTable csvJson={n6Data} />}
       </TabPanel>
     </Box>
   );
