@@ -125,7 +125,28 @@ export default function PageTabs(props) {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        {allpoint && <InfoTable allpoint={allpoint} csvJson={csvJson}/>}
+        {allpoint && <InfoTable allpoint={allpoint} csvJson={csvJson} />}
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        {yData && <InfoTable allpoint={allpoint} csvJson={yData} />}
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        {n1Data && <InfoTable allpoint={allpoint} csvJson={n1Data} />}
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        {n2Data && <InfoTable allpoint={allpoint} csvJson={n2Data} />}
+      </TabPanel>
+      <TabPanel value={value} index={4}>
+        {n3Data && <InfoTable allpoint={allpoint} csvJson={n3Data} />}
+      </TabPanel>
+      <TabPanel value={value} index={5}>
+        {n4Data && <InfoTable allpoint={allpoint} csvJson={n4Data} />}
+      </TabPanel>
+      <TabPanel value={value} index={6}>
+        {n5Data && <InfoTable allpoint={allpoint} csvJson={n5Data} />}
+      </TabPanel>
+      <TabPanel value={value} index={7}>
+        {n6Data && <InfoTable allpoint={allpoint} csvJson={n6Data} />}
       </TabPanel>
     </Box>
   );
