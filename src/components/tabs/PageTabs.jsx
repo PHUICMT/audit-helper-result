@@ -4,6 +4,7 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import { green, yellow, red } from "@mui/material/colors";
+import SwipeableViews from 'react-swipeable-views';
 
 import TabPanel from "../tab_panel/TabPanel";
 import InfoTable from "../tables/InfoTable";
@@ -109,6 +110,10 @@ export default function PageTabs(props) {
     setValue(newValue);
   };
 
+  const handleChangeIndex = (index) => {
+    setValue(index);
+  };
+
   function createBadgePoint(label, isY = false) {
     if (allpoint) {
       const key = label.toLowerCase();
@@ -156,7 +161,10 @@ export default function PageTabs(props) {
         <Tabs
           value={value}
           onChange={handleChange}
-          aria-label="basic tabs example"
+          variant="scrollable"
+          scrollButtons
+          allowScrollButtonsMobile
+          aria-label="Audit Helper Tabs"
         >
           <Tab label="Audit Helper Result" {...a11yProps(0)} />
           <Tab label={createBadgePoint("Y", true)} {...a11yProps(1)} />
@@ -168,6 +176,11 @@ export default function PageTabs(props) {
           <Tab label={createBadgePoint("N6")} {...a11yProps(7)} />
         </Tabs>
       </Box>
+      <SwipeableViews
+        axis={'x'}
+        index={value}
+        onChangeIndex={handleChangeIndex}
+      >
       <TabPanel value={value} index={0}>
         {allpoint && <InfoTable allpoint={allpoint} csvJson={csvJson} />}
       </TabPanel>
@@ -192,6 +205,7 @@ export default function PageTabs(props) {
       <TabPanel value={value} index={7}>
         {n6Data && <DetailTable csvJson={n6Data} />}
       </TabPanel>
+      </SwipeableViews>
     </Box>
   );
 }

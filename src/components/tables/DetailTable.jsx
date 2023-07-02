@@ -20,10 +20,12 @@ export default function DetailTable(props) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
+        <TableHead sx={{ backgroundColor: "lightblue" }}>
           <TableRow>
             {header.map((head) => (
-              <TableCell key={head}>{head}</TableCell>
+              <TableCell sx={{ fontSize: 18, fontWeight: "bold" }} key={head}>
+                {head}
+              </TableCell>
             ))}
           </TableRow>
         </TableHead>

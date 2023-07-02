@@ -1,15 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@100;200;400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Prompt:wght@100;200;400;700&display=swap");
 
 * {
-  font-family: 'Prompt', sans-serif !important;
+  font-family: "Prompt", sans-serif !important;
 }
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100%;
+  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
