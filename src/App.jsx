@@ -1,15 +1,15 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 
-import PageHeader from "./components/page_header/PageHeader";
-import CsvUploader from "./components/csv_uploader/CsvUploader";
+import AuditHelper from "./pages/audit_helper/AuditHelper";
+import Landing from "./pages/landing/Landing";
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<CsvUploader/>} />
-        <Route path="/page_header" element={<PageHeader/>} />
+        <Route path="/" element={<Landing/>} />
+        <Route path="/audit-helper" element={<AuditHelper/>} />
       </Routes>
     </div>
   );

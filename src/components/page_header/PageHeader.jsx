@@ -1,27 +1,37 @@
-import * as React from 'react';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
+import * as React from "react";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import PropTypes from "prop-types";
 
-import PageTabs from '../tabs/PageTabs';
-
-function PageHeader() {
-  const { title } = "Audit Helper Result";
+function PageHeader(props) {
+  const { title, subtitle } = props;
 
   return (
     <React.Fragment>
-      <Toolbar>
-        <Typography
-          variant="h5"
-          color="inherit"
-          align="left"
-          noWrap
-        >
+      <Toolbar
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+          padding: 5,
+        }}
+      >
+        <Typography variant="h5" color="inherit" align="left" paddingBottom={2}>
           {title}
         </Typography>
+        {subtitle && (
+          <Typography variant="h7" color="inherit" align="left">
+            {subtitle}
+          </Typography>
+        )}
       </Toolbar>
-      <PageTabs />
     </React.Fragment>
   );
 }
+
+PageHeader.propTypes = {
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
+};
 
 export default PageHeader;

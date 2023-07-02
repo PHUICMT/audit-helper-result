@@ -1,7 +1,6 @@
 import React, { useCallback, useState, useMemo } from "react";
 import { useDropzone } from "react-dropzone";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
+import { useNavigate } from "react-router-dom";
 import { CircleSpinnerOverlay } from "react-spinner-overlay";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
@@ -51,6 +50,7 @@ export default function CsvUploader() {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState([]);
   const [fileNames, setFileNames] = useState(null);
+  const navigate = useNavigate();
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file) => {
       setFileNames(file.name);
@@ -92,7 +92,10 @@ export default function CsvUploader() {
         CSVToApi(string_csv, (response) => {
           if (response === "Error") {
             ErrorDialogPopup();
+            setLoading(false);
+            return null;
           }
+          navigate("/audit-helper", { state: { data: response } });
           setLoading(false);
           return null;
         });
@@ -113,21 +116,6 @@ export default function CsvUploader() {
         loading={loading}
         overlayColor="rgba(0,153,255,0.2)"
       />
-      <Toolbar
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          padding: 5,
-        }}
-      >
-        <Typography variant="h5" color="inherit" align="left" paddingBottom={2}>
-          Audit Choice 2 Check 3 by AI
-        </Typography>
-        <Typography variant="h7" color="inherit" align="left">
-          File ที่นำเข้าเพื่อให้ AI ช่วยตรวจสอบความถูกต้องของสาเหตุการตาย
-        </Typography>
-      </Toolbar>
 
       <div style={{ paddingInline: 100 }}>
         <div {...getRootProps({ style })}>
