@@ -2,6 +2,8 @@ import * as React from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
+import Avatar from "@mui/material/Avatar";
+import { green, yellow, red } from "@mui/material/colors";
 
 import TabPanel from "../tab_panel/TabPanel";
 import InfoTable from "../tables/InfoTable";
@@ -107,6 +109,47 @@ export default function PageTabs(props) {
     setValue(newValue);
   };
 
+  function createBadgePoint(label, isY = false) {
+    if (allpoint) {
+      const key = label.toLowerCase();
+      const point = allpoint[key];
+      const percentage = (allpoint[key] / allpoint.total) * 100;
+      const calculateColor = () => {
+        if (isY) {
+          return green;
+        }
+        if (percentage > 40) {
+          return red;
+        } else if (percentage > 0) {
+          return yellow;
+        }
+      };
+
+      const color = calculateColor();
+      const showLabel = isY ? "Y:ข้อมูลไม่มีความผิดปกติ" : label;
+      return (
+        <div style={{ display: "flex", paddingInline: "10px" }}>
+          {showLabel}
+          <Avatar
+            sx={{
+              marginLeft: 0.5,
+              width: 16,
+              height: 16,
+              fontSize: 10,
+              color: color[900],
+              bgcolor: color[200],
+            }}
+          >
+            {point}
+          </Avatar>
+        </div>
+      );
+    } else {
+      const showLabel = isY ? "Y:ข้อมูลไม่มีความผิดปกติ" : label;
+      return showLabel;
+    }
+  }
+
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -116,13 +159,13 @@ export default function PageTabs(props) {
           aria-label="basic tabs example"
         >
           <Tab label="Audit Helper Result" {...a11yProps(0)} />
-          <Tab label="Y:ข้อมูลไม่มีความผิดปกติ " {...a11yProps(1)} />
-          <Tab label="N1" {...a11yProps(2)} />
-          <Tab label="N2" {...a11yProps(3)} />
-          <Tab label="N3" {...a11yProps(4)} />
-          <Tab label="N4" {...a11yProps(5)} />
-          <Tab label="N5" {...a11yProps(6)} />
-          <Tab label="N6" {...a11yProps(7)} />
+          <Tab label={createBadgePoint("Y", true)} {...a11yProps(1)} />
+          <Tab label={createBadgePoint("N1")} {...a11yProps(2)} />
+          <Tab label={createBadgePoint("N2")} {...a11yProps(3)} />
+          <Tab label={createBadgePoint("N3")} {...a11yProps(4)} />
+          <Tab label={createBadgePoint("N4")} {...a11yProps(5)} />
+          <Tab label={createBadgePoint("N5")} {...a11yProps(6)} />
+          <Tab label={createBadgePoint("N6")} {...a11yProps(7)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
