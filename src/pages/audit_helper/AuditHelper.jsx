@@ -6,13 +6,14 @@ import PageTabs from "../../components/tabs/PageTabs";
 
 function AuditHelper() {
   const location = useLocation();
-  const csv_string = location.state.data;
+
   const title = "Audit Helper Result";
-  console.log();
+  const csvString = location.state.data;
+
   return (
     <React.Fragment>
       <PageHeader title={title} />
-      <PageTabs />
+      <PageTabs csvString={csvString} />
     </React.Fragment>
   );
 }

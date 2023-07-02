@@ -9,6 +9,7 @@ import Avatar from "@mui/material/Avatar";
 import { green, yellow, red, grey } from "@mui/material/colors";
 import Button from "@mui/material/Button";
 import DownloadIcon from "@mui/icons-material/Download";
+import { ExportToCsv } from "export-to-csv";
 
 function createData(label, point, total_point, is_y = false) {
   const calculatePercentage = (value, total) => {
@@ -40,6 +41,7 @@ function BadgePoint(props) {
 
 export default function InfoTable(props) {
   const allpoint = props.allpoint;
+  const csvJson = props.csvJson;
 
   const rows = [
     createData("Y : ข้อมูลไม่มีความผิดปกติ", allpoint.y, allpoint.total, true),
@@ -62,6 +64,22 @@ export default function InfoTable(props) {
       allpoint.total
     ),
   ];
+
+  const onDownload = () => {
+    const options = {
+      filename: "audit_helper_result",
+      fieldSeparator: ",",
+      quoteStrings: '"',
+      decimalSeparator: ".",
+      showLabels: true,
+      showTitle: false,
+      useTextFile: false,
+      useBom: true,
+      useKeysAsHeaders: true,
+    };
+    const csvExporter = new ExportToCsv(options);
+    csvExporter.generateCsv(csvJson);
+  };
 
   return (
     <div>
@@ -89,6 +107,7 @@ export default function InfoTable(props) {
         </Table>
       </TableContainer>
       <Button
+        onClick={onDownload}
         sx={{
           padding: 2,
           marginTop: 2,

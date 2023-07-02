@@ -1,5 +1,6 @@
 import { read, utils } from "xlsx";
 import axios from "axios";
+import Papa from "papaparse";
 
 export function CSVReader(handleFile, callback) {
   const reader = new FileReader();
@@ -90,6 +91,16 @@ export async function CSVToApi(csv_data, callback) {
       callback("Error")
     })
   } catch (error) {
+    callback("Error")
+  }
+}
+
+export function CSVStringToJson(csv_string, callback) {
+  try {
+    const json_data = Papa.parse(csv_string, { header: true, skipEmptyLines: true })
+    console.log(json_data.data)
+    callback(json_data.data)
+  } catch (_) {
     callback("Error")
   }
 }
