@@ -98,7 +98,6 @@ export async function CSVToApi(csv_data, callback) {
 export function CSVStringToJson(csv_string, callback) {
   try {
     const json_data = Papa.parse(csv_string, { header: true, skipEmptyLines: true })
-    console.log(json_data.data)
     callback(json_data.data)
   } catch (_) {
     callback("Error")

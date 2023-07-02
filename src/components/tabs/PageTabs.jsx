@@ -28,7 +28,6 @@ export default function PageTabs(props) {
   const [n6Data, setN6Data] = React.useState([]);
 
   const initData = (result) => {
-    console.log(result);
     let y = 0;
     let n1 = 0;
     let n2 = 0;
