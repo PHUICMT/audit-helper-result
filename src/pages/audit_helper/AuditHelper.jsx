@@ -10,6 +10,10 @@ function AuditHelper() {
   const title = "Audit Helper Result";
   const csvString = location.state.data;
 
+  React.useEffect(() => {
+    localStorage.removeItem("alreadysubmit");
+  }, []);
+
   return (
     <React.Fragment>
       <PageHeader title={title} />

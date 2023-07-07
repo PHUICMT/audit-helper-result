@@ -31,3 +31,31 @@ export const ErrorFormatPopup = () => {
   });
   return null; // ErrorDialogPopup doesn't render anything directly
 }
+
+export const ErrorLogin = () => {
+  Swal.fire({
+    icon: "error",
+    title: "ขออภัย",
+    text: "ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง",
+    confirmButtonText: "ลองใหม่อีกครั้ง",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      handleReloadPage();
+    }
+  });
+  return null; // ErrorDialogPopup doesn't render anything directly
+}
+
+export const ErrorNetwork = () => {
+  Swal.fire({
+    icon: "error",
+    title: "ขออภัย",
+    text: "เกิดข้อผิดพลาดในการเชื่อมต่อกับเซิร์ฟเวอร์ กรุณาลองใหม่อีกครั้ง",
+    confirmButtonText: "ลองใหม่อีกครั้ง",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      handleReloadPage();
+    }
+  });
+  return null; // ErrorDialogPopup doesn't render anything directly
+}
