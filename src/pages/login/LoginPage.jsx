@@ -33,7 +33,7 @@ export default function LoginPage({ setToken }) {
 
   async function loginUser(credentials) {
     return await axios
-      .post("http://localhost/auth/login", credentials)
+      .post("http://104.248.96.8/auth/login", credentials)
       .then((res) => {
         return res.data.token;
       })
