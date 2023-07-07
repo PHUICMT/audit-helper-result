@@ -14,7 +14,10 @@ import {
   JsonToCSV,
   CSVToApi,
 } from "../../services/CSVProvider";
-import ErrorDialogPopup from "../dialog_popup/ErrorDialogPopup";
+import {
+  ErrorDialogPopup,
+  ErrorFormatPopup,
+} from "../dialog_popup/ErrorDialogPopup";
 
 const baseStyle = {
   flex: 1,
@@ -50,6 +53,7 @@ export default function CsvUploader() {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState([]);
   const [fileNames, setFileNames] = useState(null);
+  const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file) => {
@@ -80,26 +84,37 @@ export default function CsvUploader() {
   const onSubmit = () => {
     setLoading(true);
     CSVIndexed(data, (json_csv_indexed) => {
-      if (json_csv_indexed === "Error") {
+      if (json_csv_indexed === "WrongCSV") {
+        setIsError(true);
+        setLoading(false);
+        ErrorFormatPopup();
+        return null;
+      } else if (json_csv_indexed === "Error") {
+        setIsError(true);
+        setLoading(false);
         ErrorDialogPopup();
         return null;
-      }
-      JsonToCSV(json_csv_indexed, (string_csv) => {
-        if (string_csv === "Error") {
-          ErrorDialogPopup();
-          return null;
-        }
-        CSVToApi(string_csv, (response) => {
-          if (response === "Error") {
-            ErrorDialogPopup();
+      } else {
+        JsonToCSV(json_csv_indexed, (string_csv) => {
+          if (string_csv === "Error") {
+            setIsError(true);
             setLoading(false);
+            ErrorDialogPopup();
             return null;
           }
-          navigate("/audit-helper", { state: { data: response } });
-          setLoading(false);
-          return null;
+          CSVToApi(string_csv, (response) => {
+            if (response === "Error") {
+              setIsError(true);
+              setLoading(false);
+              ErrorDialogPopup();
+              return null;
+            }
+            navigate("/audit-helper", { state: { data: response } });
+            setLoading(false);
+            return null;
+          });
         });
-      });
+      }
     });
   };
 

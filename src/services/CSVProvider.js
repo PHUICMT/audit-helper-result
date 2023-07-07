@@ -39,6 +39,18 @@ export function CSVReader(handleFile, callback) {
 }
 
 export async function CSVIndexed(json_data, callback) {
+  try {
+    for await (let i of json_data) {
+      if (checkFields(i)) {
+        callback("WrongCSV")
+        return
+      }
+    }
+  } catch (_) {
+    callback("WrongCSV")
+    return
+  }
+    
   let indexed_data = []
   let index = 0
   try {
@@ -74,7 +86,7 @@ export async function JsonToCSV(json_data, callback) {
 }
 
 export async function CSVToApi(csv_data, callback) {
-  const apiUrl = "http://localhost/upload";
+  const apiUrl = "http://104.248.96.8/upload/test";
   const blob = new Blob([csv_data], { type: 'text/csv' });
   const csv_file = new File([blob], 'data.csv', { type: 'text/csv' });
 
@@ -101,5 +113,13 @@ export function CSVStringToJson(csv_string, callback) {
     callback(json_data.data)
   } catch (_) {
     callback("Error")
+  }
+}
+
+function checkFields(jsonObj) {
+  if (!jsonObj.hasOwnProperty('a') || !jsonObj.hasOwnProperty('b') || !jsonObj.hasOwnProperty('c') || !jsonObj.hasOwnProperty('d')) {
+    return true;
+  } else {
+    return false;
   }
 }
