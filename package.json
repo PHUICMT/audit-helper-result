@@ -1,6 +1,7 @@
 {
   "name": "audit-helper-result",
   "version": "0.1.0",
+  "proxy": "http://143.198.220.245:5000",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -30,7 +31,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts --openssl-legacy-provider build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

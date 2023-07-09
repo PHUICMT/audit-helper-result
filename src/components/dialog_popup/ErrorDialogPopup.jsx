@@ -59,3 +59,19 @@ export const ErrorNetwork = () => {
   });
   return null; // ErrorDialogPopup doesn't render anything directly
 }
+
+export const LogoutOption = () => {
+  Swal.fire({
+    icon: "warning",
+    title: "คุณต้องการออกจากระบบหรือไม่",
+    showCancelButton: true,
+    confirmButtonText: "ยืนยัน",
+    cancelButtonText: "ยกเลิก",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      localStorage.removeItem("token");
+      window.location.reload();
+    }
+  });
+  return null; // ErrorDialog
+}
